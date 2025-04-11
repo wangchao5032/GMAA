@@ -1,0 +1,10 @@
+.spyproject/
+__pycache__/
+data/
+*.ini
+.idea/*
+venv/
+*.pkl
+results
+sample_data
+not_to_upload
