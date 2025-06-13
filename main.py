@@ -43,18 +43,16 @@ if __name__ == "__main__":
     res_of_interest = model.SetBelief(gp.select_areas)  
     gp.InitRecordRes(res_of_interest)
     
-    # 初始化居民的邻居（需要等所有小区、居民实例化之后）
     for i in range(gp.area_num):
         if i % 1000 == 0: print(f'init neighbour of res {i}')
         area = gp.areas[i]
         area.FindNeighborsArea()
 
-    # 实例化医院
     for i in range(gp.hos_num):
         if i % 50 == 0: print(f'init hos {i}')
         loc = supply_ori.loc[i]  
-        x, y, level = loc['lon_gc'], loc['lat_gc'], loc['level']
-        hos = model.Hospital(i, x, y, level)
+        x, y, level, beds = loc['lon_gc'], loc['lat_gc'], loc['level'], loc['beds']
+        hos = model.Hospital(i, x, y, level, beds)
         gp.hospitals.append(hos)
     gp.good_hospital_ids = [i for i in range(gp.hos_num) if gp.hospitals[i].level == 6]
     print(f'all init done ...')
@@ -66,14 +64,6 @@ if __name__ == "__main__":
     supply_ori = None
     demand_spatial = None
     supply_spatial = None
-
-    # 计算2SFCA 
-    # result = model.Cal2SFCA(5)
-    # result_df = pd.DataFrame(data = result,index = None)
-    # # 导出为csv
-    # data = pd.concat([demand_ori,result_df],axis=1)  # 拼接demand_ori、可达性计算结果、地区里的居民最想去的医院、地区的平均效用值
-    # utils.SaveResult2SFCA(data, './data/hospital_drugstore/picture/2SFCA-5.csv')
-    # sys.exit()
 
     print(f'start iteration ...')
     for p in range(gp.iteration):

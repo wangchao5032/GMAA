@@ -1,7 +1,6 @@
 # %%
 import pickle
 import numpy as np
-# with open('./data/hz/picture/result.pkl', 'rb') as f:
     
 def stat(res, hospitals, k):
     lvl_cnts = np.zeros(4)
@@ -41,26 +40,13 @@ def stat_one_iteration(ks, filename):
     return level_counts
         
 topks = [20, 10, 5, 3, 1]
-dirname = r'D:\code\access\data\实验\实验-增加健康信念异质性\分数为0.01-1-100-随机1.0-探索保留前20-500-统计\results'
+dirname = r'D:\data\results'
 tot_level_counts = {}
 for i in range(0, 500, 1):
     filename = rf'{dirname}\iter-{i}.pkl'
-
     lvl_cnts = stat_one_iteration(topks, filename)
-        
     tot_level_counts[f'iter-{i}'] = lvl_cnts
-
 
 with open('final_results.pkl', 'wb') as f:
     pickle.dump(tot_level_counts, f)
-
-
-# %%
-# import matplotlib.pyplot as plt
-
-# top_10_cnts = np.vstack([lc[10][0] for lc in tot_level_counts])
-# plt.plot(top_10_cnts, label=['lv6', 'lv5', 'lv4', 'lv3'])
-
-# plt.legend()
-# plt.ylim(0, 10)
 
