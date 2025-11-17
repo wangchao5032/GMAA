@@ -5,6 +5,7 @@ data/
 .idea/*
 venv/
 *.pkl
-results
 sample_data
 not_to_upload
+*.csv
+*.png
